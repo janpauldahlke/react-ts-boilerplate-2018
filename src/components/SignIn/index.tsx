@@ -89,7 +89,8 @@ export default class SignIn extends React.Component<ISignProps, ISignState> {
 
   //functions
   //beware we are grabing password and fake validating it in frontend. consider this a stub and remove it
-  private fakeCheckCredentialsAndMakeAuthRequest = () => {
+  private fakeCheckCredentialsAndMakeAuthRequest = (e: any) => {
+    e.preventDefault();
     if(this.props.getAuth && typeof this.props.getAuth() === 'function' ) {
 
       //here is our fake login
@@ -105,7 +106,7 @@ export default class SignIn extends React.Component<ISignProps, ISignState> {
   render() {
 
     const {classes} = this.props;
-    console.log('signIn', this.props);
+    console.log('signIn', this.state);
 
 
     //TODO show how to use AuthStore for render decisions
