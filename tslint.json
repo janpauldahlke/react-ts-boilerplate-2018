@@ -1,0 +1,91 @@
+{
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts"
+    ]
+  },
+  "rules": {
+    "align": [ false, "parameters", "statements", "members", "elements" ],
+    "ban": [
+      true,
+      [ "_", "extend" ],
+      [ "_", "isNull" ],
+      [ "_", "isDefined" ]
+    ],
+    "class-name": false,
+    "comment-format": [ false ],
+    "curly": true,
+    "deprecation": true,
+    "eofline": false,
+    "interface-name": [ false ],
+    "jsdoc-format": false,
+    "jsdoc-require": [
+      false,
+      "no-constructors",
+      "no-properties"
+    ],
+    "label-position": false,
+    "label-undefined": false,
+    "max-classes-per-file": [ false, 2 ],
+    "max-file-line-count": [ false, 300 ],
+    "max-line-length": [ false, 1500 ],
+    "no-any": false,
+    "no-arg": true,
+   
+    "no-consecutive-blank-lines": [ true, 2 ],
+    "no-console": [
+      true,
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace",
+      { "allow": ["log"]}
+    ],
+    "no-construct": true,
+    "no-debugger": true,
+    "no-duplicate-key": false,
+    "no-duplicate-switch-case": true,
+    "no-duplicate-variable": true,
+    "no-empty": false,
+    "no-eval": false,
+    "no-invalid-this": [ false, "check-function-in-method" ],
+    "no-internal-module": false,
+    "no-irregular-whitespace": true,
+    "no-namespace": false,
+    "no-string-literal": false,
+    "no-trailing-comma": false,
+    "no-trailing-whitespace": false,
+    "no-unreachable": true,
+    "no-unused-expression": false,
+    "no-unused-variable": false,
+    "no-use-before-declare": true,
+    "object-literal-sort-keys": [ false, "ignore-case", "match-declaration-order" ],
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
+    "quotemark": [ false, "double" ],
+    "semicolon": true,
+    "switch-default": true,
+    "triple-equals": [ false, "allow-null-check" ],
+    "use-strict": [
+      true,
+      "check-module",
+      "check-function"
+    ],
+    "variable-name": false,
+    "whitespace": [
+      false,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ]
+  }
+}

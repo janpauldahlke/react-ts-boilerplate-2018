@@ -1,0 +1,14 @@
+{
+  "Authentication" : {
+    "access_token": "IfS2yexYXCzFdFivOw7sLVTTc8uox3izICB1afrb78AmRMCnDE5zS1IjbegKrlDILaJjfJLlSnx-DG2YwWYzRGbJjWUfQzjAn1vWXJssheFfBzHqiri-eKnrOdVGQkfyuxnwjWIxJ_g1z2OUxcIFJh9vJx1hAhcjzFkIM38k0PnbP3mE_8vSTw-yGm_VdoZWlIhN-jnGT4RHJct4oUX-ZbUxfcHnS-XHTsv00yf1zS7D4EGQHrlI7rq0TS4lxR9RcUgZwKPmvEED8pyeiRaKrW0GizoZ8gpqF6tt3LsUI8SiGGZjlKdaeT_cq-Dmz1CDX94C5DsfgA8zLSfRtaLnyszPUtPe8fLtmx9lZWDctyQqnvDSg11DJkA5lIp99wv8LuNj7Mx_795C7bNbuQviSoA7UIdvp8aZ6rddAmYIffUWFZk7",
+  "token_type": "bearer",
+  "expires_in": 157679999,
+  "username": "1111",
+  "firstname": "JanPaul",
+  "lastname": "Anon",
+  "memberid": "1111",
+  "email": "paulanon@nomail.com",
+  ".issued": "Wed, 05 Sep 2018 09:33:20 GMT",
+  ".expires": "Mon, 04 Sep 2023 09:33:20 GMT"
+  }
+}
