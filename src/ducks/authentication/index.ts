@@ -2,7 +2,10 @@ import  { Action } from 'redux';
 import axios, { AxiosInstance } from 'axios';
 
 // a service to persist successful auth to localstorage
-import TokenService from '../services/tokenService';
+import TokenService from '../../services/tokenService';
+
+//to be able to dispatch Errors to the Errorcomponent
+import ErrorDuck from '../error';
 
 /* 
   Follow this pattern!
@@ -116,7 +119,7 @@ export default class AuthDuck {
       //we dispatch here to be set the state to loading
       dispatch(AuthDuck.getAuthAction());
       //we make use of the axios instance
-      return ax().get('/Authentication')
+      return ax().get('/Authenticatin')
         .then((res) => {
           //use the tokenService to persist
           const tokenService : TokenService= new TokenService();
@@ -126,8 +129,8 @@ export default class AuthDuck {
          })
         .catch((err: Error) => {
           //inside here we dispatch FailureAction
-          //improve this by error component
-          console.log(err.message);
+          //improve this by error component //done
+          dispatch(ErrorDuck.throwErroWithMessage({text: err.message, title: 'getAuth Error'}));
         });
     };
   }

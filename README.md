@@ -129,7 +129,9 @@ The pattern is to have all these inside one duck:
 ### ErrorComponent
 
 There is a rudimental example prepared in this boilerplate, that shows usage and consumption of a high level<br>
-message or error-component.
+message or error-component.<br>
+Import the ErrorDuck inside the Ducks that you want the Errors to be catched.
+dispatch them in the thunk-part in the `.catch((err) => {})`
 
 
 ### Services
