@@ -106,8 +106,7 @@ export default class SignIn extends React.Component<ISignProps, ISignState> {
   render() {
 
     const {classes} = this.props;
-    console.log('signIn', this.state);
-
+    //console.log('signIn', this.state);
 
     //TODO show how to use AuthStore for render decisions
     return(

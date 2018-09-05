@@ -2,17 +2,16 @@
 
 class TokenService  {
   //configure this file to your needs, consider it an example
-
+  
   public static propName : string = 'Authentication';
   public static auth : Auth = {} as Auth;
 
   public setToken = (auth: Auth ) => {
-    
+    console.log('setting Token', auth);
     let tokenstring: string = '';
     if(Object.keys(auth).length > 0) {
+      console.log('authObject > ', Object.keys(auth).length > 0);
       tokenstring = `${auth.token_type} ${auth.access_token}`;
-    }
-    if(localStorage.getItem(TokenService.propName) === 'null' && tokenstring.length > 0) {
       localStorage.setItem(TokenService.propName, tokenstring);
     }
     return null;
