@@ -119,7 +119,7 @@ export default class AuthDuck {
       //we dispatch here to be set the state to loading
       dispatch(AuthDuck.getAuthAction());
       //we make use of the axios instance
-      return ax().get('/Authenticatin')
+      return ax().get('/Authentication')
         .then((res) => {
           //use the tokenService to persist
           const tokenService : TokenService= new TokenService();

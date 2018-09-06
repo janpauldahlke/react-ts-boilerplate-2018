@@ -6,11 +6,13 @@ import { Action } from 'redux';
 enum ErrorActions {
   THROW_ERROR = 'THROW_ERROR',
   THROW_ERROR_WITH_MESSAGE = 'THROW_ERROR_WITH_MESSAGE',
+  RESET_ERROR_STORE = 'RESET_ERROR_STORE',
 }
 
 //actiontype
 type throwErrorActionType = { type: string };
 type throwErrorWithMessageActionType = { type: string, error: _Error };
+type resetErrorStoreActionType = { type: string};
 
 export default class ErrorDuck {
   //action creatr
@@ -21,6 +23,9 @@ export default class ErrorDuck {
     type: ErrorActions.THROW_ERROR_WITH_MESSAGE,
     error
   }) 
+  public static resetErrorStoreAction = () : resetErrorStoreActionType => ({
+    type: ErrorActions.RESET_ERROR_STORE
+  })
 
   //reducer functions
   public static throwErrorActionReducerFunction(state: ErrorStore) : ErrorStore {
@@ -43,6 +48,16 @@ export default class ErrorDuck {
     return newState;
   }
 
+  public static resetErrorStoreActionReducerFunction(state: ErrorStore) : ErrorStore {
+    let newState = Object.assign({}, state);
+    newState = {
+      isError: false,
+      isLoading: false,
+      Error: {} as _Error
+    };
+    return newState;
+  }
+
   //reducer
   public static reducer = (state: ErrorStore = ErrorDuck.InitialErrorStore, action: Action<any>) => {
     switch(action.type) {
@@ -50,6 +65,8 @@ export default class ErrorDuck {
         return ErrorDuck.throwErrorActionReducerFunction(state);
       case ErrorActions.THROW_ERROR_WITH_MESSAGE:
         return ErrorDuck.throwErrorWithMessageActionReducerFuncrion(state, action as throwErrorWithMessageActionType);
+      case ErrorActions.RESET_ERROR_STORE:
+        return ErrorDuck.resetErrorStoreActionReducerFunction(state);  
       default:
         return state;
     }
@@ -75,6 +92,11 @@ export default class ErrorDuck {
   public static throwErroWithMessage(err: _Error) {
     return(dispatch: any) => {
       dispatch(ErrorDuck.throwErrorWithMessageAction(err));
+    };
+  }
+  public static resetErrorStore() {
+    return(dispatch: any) => {
+      dispatch(ErrorDuck.resetErrorStoreAction());
     };
   }
 }

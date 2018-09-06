@@ -64,6 +64,7 @@ export interface ISignProps {
   classes? : any;
   AuthStore: AuthStore;
   getAuth? : () => void;
+  throwErrorWithMessage? : (msg: _Error) => void;
 }
 export interface ISignState {
   email: string;
@@ -90,14 +91,19 @@ export default class SignIn extends React.Component<ISignProps, ISignState> {
   //functions
   //beware we are grabing password and fake validating it in frontend. consider this a stub and remove it
   private fakeCheckCredentialsAndMakeAuthRequest = (e: any) => {
+    
     e.preventDefault();
-    if(this.props.getAuth && typeof this.props.getAuth() === 'function' ) {
+ 
+    const email : string = 'peterparker@stark.com';
+    const password : string = '42';
 
-      //here is our fake login
-      const email : string = 'peterparker@stark.com';
-      const password : string = '42';
-      if(this.state.email === email && this.state.password === password) {
+    if(this.state.email === email && this.state.password === password) {
+     if(typeof this.props.getAuth === 'function') {
         this.props.getAuth();
+      }
+    } else {
+      if(typeof this.props.throwErrorWithMessage === 'function') {
+        this.props.throwErrorWithMessage({title: 'Wrong Credentials', text: 'Please make sure to pass correct credentials'});
       }
     }
   }

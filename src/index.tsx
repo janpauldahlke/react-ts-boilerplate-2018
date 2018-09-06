@@ -6,7 +6,8 @@ import * as ReduxThunk from 'redux-thunk';
 
 import { rootReducer, RootInitialState } from './RootState';
 
-import App from './components/App'; // is the highest entryPoint
+import App from './containers/AppContainer'; // is the highest entryPoint
+//import App from './components/App';
 import './index.css'; //contains a resets css
 
 import registerServiceWorker, { unregister } from './registerServiceWorker';

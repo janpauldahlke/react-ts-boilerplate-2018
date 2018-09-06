@@ -8,7 +8,9 @@ import Button from '@material-ui/core/Button';
 
 export interface IGlobalMessageProps {
   ErrorStore? : ErrorStore;
+  resetErrorStore?: () => void;
 }
+
 export interface IGlobalMessageState {
   open: boolean;
 }

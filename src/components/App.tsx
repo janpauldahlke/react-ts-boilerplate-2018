@@ -3,10 +3,11 @@ import {
   MuiThemeProvider,
   createMuiTheme } from '@material-ui/core';
 
-//import SignIn from './SignIn';
 import SignIn from '../containers/SignInContainer';
+import Message from '../components/message';
 
 export interface IAppProps {
+  ErrorStore?: ErrorStore;
   // your props here
   // also one can extend them
   // consider export interface IAppProps extends RouteComponentProps {..}
@@ -25,10 +26,12 @@ readonly state : IAppState= {
 };
 
   public render() {
+    
     return (
       <div className="App">
         <MuiThemeProvider theme={createMuiTheme()}>
           <SignIn />
+          <Message ErrorStore={this.props.ErrorStore}/>
         </MuiThemeProvider>
       </div>
     );
