@@ -1,18 +1,22 @@
 import * as React from 'react';
+import { RouteComponentProps, Link, withRouter} from 'react-router-dom';
+//import { ConditionalRoute } from '../routes/conditionalRoute';
+import TokenService from '../services/tokenService';
 import {
   MuiThemeProvider,
   createMuiTheme } from '@material-ui/core';
 
-import SignIn from '../containers/SignInContainer';
+
 import Message from '../components/message';
 
-export interface IAppProps {
+export interface IAppProps extends RouteComponentProps<any> {
   ErrorStore?: ErrorStore;
-  // your props here
-  // also one can extend them
-  // consider export interface IAppProps extends RouteComponentProps {..}
+  AuthStore?: AuthStore;
+  throwErroWithMessage?: (msg: _Error) => void;
+  resetErrorStore?: () => void;
 }
 
+let renderCounter = 0;
 export interface IAppState {
   // your state
 }
@@ -25,17 +29,40 @@ readonly state : IAppState= {
   //your state
 };
 
-  public render() {
+  //think
+  /*
+    would it be enought to ask in lifecycle to ask app for beeing loggedin and else, redirect to login?
+    its poorly out of scope of react router, but it might be a sloution
+  */
+ componentWillMount () {
+   const tokenService = new TokenService();
+   const isAuth = tokenService.isAuthenticated();
     
+   if(isAuth) {
+     this.props.history.push('/home');
+   }
+   this.props.history.push('/login');
+ }
+
+  public render() {
+
+    console.log('render', renderCounter++);
     return (
+      
       <div className="App">
         <MuiThemeProvider theme={createMuiTheme()}>
-          <SignIn />
-          <Message ErrorStore={this.props.ErrorStore}/>
+          
+             <Link to="/login">Login</Link>
+             <Link to="/home">Home</Link>
+           
+          <Message {...this.props}/>
         </MuiThemeProvider>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
+
+//sammlung von links: durcharbeiten
+// https://stackoverflow.com/questions/47747754/how-to-rewrite-the-protected-router-using-typescript-and-react-router-4

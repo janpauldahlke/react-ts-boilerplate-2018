@@ -1,6 +1,11 @@
 import * as React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-export default class Home extends React.Component<{},{}> {
+export interface IHomeProps extends RouteComponentProps<any> {
+
+}
+
+class Home extends React.Component<IHomeProps,{}> {
 
   render() {
     return(
@@ -8,3 +13,5 @@ export default class Home extends React.Component<{},{}> {
     );
   }
 }
+
+export default withRouter(Home);

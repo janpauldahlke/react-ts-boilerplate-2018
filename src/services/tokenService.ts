@@ -1,4 +1,5 @@
-/* inspired by https://egghead.io/lessons/javascript-redux-persisting-the-state-to-the-local-storage */
+// TODO think about how we verify login and is stillValid
+// there should be a isTokenStillValid()
 
 class TokenService  {
   //configure this file to your needs, consider it an example
@@ -7,7 +8,7 @@ class TokenService  {
   public static auth : Auth = {} as Auth;
 
   public setToken = (auth: Auth ) => {
-    console.log('setting Token', auth);
+    
     let tokenstring: string = '';
     if(Object.keys(auth).length > 0) {
       console.log('authObject > ', Object.keys(auth).length > 0);
@@ -28,6 +29,16 @@ class TokenService  {
     if(localStorage.getItem(TokenService.propName) !== 'null') {
       localStorage.removeItem(TokenService.propName);
     }
+  }
+
+  public isAuthenticated = () => {
+    // there could be more logic here in an Authentication Verification
+    // bring your own logic here
+    const tokenString = localStorage.getItem(TokenService.propName);
+    if(typeof tokenString === 'string' && tokenString.includes('bearer')) {
+      return true;
+    }
+    return false;
   }
 }
 

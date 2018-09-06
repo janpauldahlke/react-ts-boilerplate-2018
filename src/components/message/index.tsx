@@ -25,6 +25,9 @@ class GlobalMessage extends React.Component<IGlobalMessageProps, IGlobalMessageS
     this.setState({
       open: false
     });
+    if(typeof this.props.resetErrorStore === 'function') {
+      this.props.resetErrorStore();
+    }
   }
 
   componentWillReceiveProps(newProps: any) {
@@ -34,7 +37,7 @@ class GlobalMessage extends React.Component<IGlobalMessageProps, IGlobalMessageS
   }
  
   render() : JSX.Element {
-   
+  
     return(
       <div>
         {(this.props.ErrorStore && this.props.ErrorStore.isError) && (

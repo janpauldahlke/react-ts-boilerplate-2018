@@ -3,15 +3,17 @@ import * as ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import * as ReduxThunk from 'redux-thunk';
+import { BrowserRouter as Router  } from 'react-router-dom';
+//import { createBrowserHistory } from 'history';
 
 import { rootReducer, RootInitialState } from './RootState';
+import Routes from './routes/routes';
 
-import App from './containers/AppContainer'; // is the highest entryPoint
-//import App from './components/App';
 import './index.css'; //contains a resets css
 
 import registerServiceWorker, { unregister } from './registerServiceWorker';
 
+//const history = createBrowserHistory();
 const entryNode = document.getElementById('root') as HTMLElement;
 const store = createStore(
   rootReducer,
@@ -30,7 +32,9 @@ const store = createStore(
 if(entryNode) {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <Router>
+        <Routes />
+      </Router>
     </Provider>,
     entryNode
   );
