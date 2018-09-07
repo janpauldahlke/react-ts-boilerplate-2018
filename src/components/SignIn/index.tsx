@@ -20,6 +20,8 @@ import {
 
 //to use decorators
 import { compose }  from 'recompose';
+import TokenService from '../../services/tokenService';
+import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 
 
 //-----------------------------------------//
@@ -60,10 +62,10 @@ const styles = (theme: Theme) :StyleRules => ({
 //-----------------------------------------//
 //interfaces for props and state
 
-export interface ISignProps {
+export interface ISignProps extends RouteComponentProps<{}> {
   classes? : any;
   AuthStore: AuthStore;
-  getAuth? : () => void;
+  getAuth? : () => Promise<void>;
   throwErrorWithMessage? : (msg: _Error) => void;
 }
 export interface ISignState {
@@ -72,13 +74,23 @@ export interface ISignState {
 }
 
 @(compose(withStyles(styles)) as any)
-export default class SignIn extends React.Component<ISignProps, ISignState> {
+class SignIn extends React.Component<ISignProps, ISignState> {
 
   // try to avoid constructor for state, use readonly instead to keep it immutable
   readonly state : ISignState = {
     email: '',
     password: '',
   };
+  
+  //lifecycle
+  componentWillMount() {
+    const tokenService = new TokenService();
+    const isAuthenticated = tokenService.isAuthenticated();
+
+    if(isAuthenticated) {
+      this.props.history.push('/home');
+    }
+  }
 
   //generic onInputChange
   onInputChange = (e: React.ChangeEvent<HTMLInputElement>) :void => {
@@ -90,7 +102,7 @@ export default class SignIn extends React.Component<ISignProps, ISignState> {
 
   //functions
   //beware we are grabing password and fake validating it in frontend. consider this a stub and remove it
-  private fakeCheckCredentialsAndMakeAuthRequest = (e: any) => {
+  private fakeCheckCredentialsAndMakeAuthRequest = (e: any) : Promise<void> | void=> {
     
     e.preventDefault();
  
@@ -112,53 +124,61 @@ export default class SignIn extends React.Component<ISignProps, ISignState> {
   render() {
 
     const {classes} = this.props;
-    //console.log('signIn', this.state);
+    const tokenService = new TokenService();
+    const isAuthenticated = tokenService.isAuthenticated();
 
-    //TODO show how to use AuthStore for render decisions
-    return(
-      <React.Fragment>
-      <CssBaseline />
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-          </Avatar>
-          <Typography variant="headline">Sign in</Typography>
-          <form className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input
-                defaultValue={this.state.email}
-                id="email"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={this.onInputChange}
-              />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                defaultValue={this.state.password}
-                name="password"
-                type="password"
-                id="password"
-                onChange={this.onInputChange}
-              />
-            </FormControl>
-            <Button
-              type="submit"
-              fullWidth
-              variant="raised"
-              color="primary"
-              className={classes.submit}
-              onClick={this.fakeCheckCredentialsAndMakeAuthRequest}
-            >
-              Sign in
-            </Button>
-          </form>
-        </Paper>
-      </main>
-    </React.Fragment>
-    );
+    if(isAuthenticated && this.props.AuthStore.isSuccess) {
+      return (
+        <Redirect to="/home" />
+      );
+    }
+      return (
+        <React.Fragment>
+          <CssBaseline />
+          <main className={classes.layout}>
+            <Paper className={classes.paper}>
+              <Avatar className={classes.avatar}>
+              </Avatar>
+              <Typography variant="headline">Sign in</Typography>
+              <form className={classes.form}>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="email">Email Address</InputLabel>
+                  <Input
+                    defaultValue={this.state.email}
+                    id="email"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    onChange={this.onInputChange}
+                  />
+                </FormControl>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="password">Password</InputLabel>
+                  <Input
+                    defaultValue={this.state.password}
+                    name="password"
+                    type="password"
+                    id="password"
+                    onChange={this.onInputChange}
+                  />
+                </FormControl>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="raised"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={this.fakeCheckCredentialsAndMakeAuthRequest}
+                >
+                  Sign in
+                </Button>
+              </form>
+            </Paper>
+          </main>
+        </React.Fragment>
+      );
   }
 }
+
+
+export default withRouter(SignIn);

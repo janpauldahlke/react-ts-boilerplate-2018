@@ -37,7 +37,8 @@ class GlobalMessage extends React.Component<IGlobalMessageProps, IGlobalMessageS
   }
  
   render() : JSX.Element {
-  
+      
+    console.log('error message', this.props);
     return(
       <div>
         {(this.props.ErrorStore && this.props.ErrorStore.isError) && (

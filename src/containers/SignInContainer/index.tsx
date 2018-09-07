@@ -13,7 +13,7 @@ const mapStateToProps = (state: RootState) : ISignProps=> {
 
 const mapDispatchToProps = (dispatch: any) : ISignProps => {
   return {
-    getAuth: () => {
+    getAuth: ()  => {
       dispatch(AuthDuck.getAuth());
     },
     throwErrorWithMessage: (msg: _Error) => {
