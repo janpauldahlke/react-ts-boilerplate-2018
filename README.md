@@ -139,9 +139,10 @@ dispatch them in the thunk-part in the `.catch((err) => {})`
 
 ### Store
 
-Use the folder `src/store` to configure the store of redux according to your needs. There is also the possibilty to subscribe parts of the store to your localStorage. 
+Use the folder `src/store` to configure the store of redux according to your needs. There is also the possibilty to subscribe parts of the store to your localStorage. To do so check the `index.ts` and have a brief look at the store subscribe pattern. There is plenty oof space for you to connect the parts of the store you wish to the localStorage.
 
 ### Services
 
 Anything you want to consume repetitive belongs to the services. Another word could be globalHelpers.<b>
+> TokenService -> `const tokenService = new TokenService();` `tokenService.isAuthenticated()` returns the truth according to the localStorage. One might want to adapt it.
 
