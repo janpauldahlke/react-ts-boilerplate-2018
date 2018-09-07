@@ -25,7 +25,11 @@ my-app/
     ducks/
       /* your ducks here */
     services/
-    /* put all your global helpers inside here */  
+      /* put all your global helpers inside here */
+    store/
+      history.ts
+      index.ts
+      localStorage.ts
   types/
     /*your types go here */  
 ```
@@ -132,6 +136,10 @@ message or error-component.
 Import the ErrorDuck inside the Ducks that you want the Errors to be catched.
 dispatch them in the thunk-part in the `.catch((err) => {})`
 
+
+### Store
+
+Use the folder `src/store` to configure the store of redux according to your needs. There is also the possibilty to subscribe parts of the store to your localStorage. 
 
 ### Services
 

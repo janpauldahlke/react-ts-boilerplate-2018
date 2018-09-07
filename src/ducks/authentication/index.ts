@@ -1,9 +1,6 @@
 import  { Action } from 'redux';
 import axios, { AxiosInstance } from 'axios';
 
-// a service to persist successful auth to localstorage
-import TokenService from '../../services/tokenService';
-
 //to be able to dispatch Errors to the Errorcomponent
 import ErrorDuck from '../error';
 
@@ -121,10 +118,6 @@ export default class AuthDuck {
       //we make use of the axios instance
       return ax().get('/Authentication')
         .then((res) => {
-          //use the tokenService to persist
-          const tokenService : TokenService= new TokenService();
-          tokenService.setToken(res.data as Auth);
-          //inside here we dispatch SuccessActino
           dispatch(AuthDuck.getAuthSuccessAction(res.data));
          })
         .catch((err: Error) => {
