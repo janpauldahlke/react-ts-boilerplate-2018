@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { RootState } from '../../RootState';
 
 import ErrorDuck from '../../ducks/error';
+import { withRouter } from 'react-router-dom';
 
 import App, {IAppProps} from '../../components/App';
 
@@ -26,7 +27,7 @@ const mapDispatchToProps = (dispatch: any) : IAppProps => {
 };
 
 
-/* export default withRouter(
+export default withRouter(
   connect<{}, IAppProps>
-  (mapStateToProps, mapDispatchToProps)(App) as any); */
-export default connect<{}, IAppProps>(mapStateToProps, mapDispatchToProps)(App);
+  (mapStateToProps, mapDispatchToProps)(App) as any);
+//export default connect<{}, IAppProps>(mapStateToProps, mapDispatchToProps)(App);

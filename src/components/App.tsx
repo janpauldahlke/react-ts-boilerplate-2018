@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-
-import {
-  MuiThemeProvider,
-  createMuiTheme } from '@material-ui/core';
+import { RouteComponentProps, Redirect, Switch, Route } from 'react-router-dom';
+import PrivateRoute from '../routes/privateRoutes';
 
 import Message from '../components/message';
+import Home from '../components/Home';
 import SignIn from '../containers/SignInContainer';
 
 export interface IAppProps extends RouteComponentProps<any> {
@@ -14,33 +12,48 @@ export interface IAppProps extends RouteComponentProps<any> {
   throwErroWithMessage?: (msg: _Error) => void;
   resetErrorStore?: () => void;
 }
+import TokenService from '../services/tokenService';
 
-let renderCounter = 0;
 export interface IAppState {
   // your state
 }
 
-class App extends React.Component<IAppProps,IAppState> {
+class App extends React.Component<IAppProps, IAppState> {
 
   // we try to avoid constructor and would use state like this
 
-readonly state : IAppState= {
-  //your state
-};
+  readonly state: IAppState = {
+    //your state
+  };
+  private renderRoutesOrSignIn() {
+    if ((this.props.AuthStore && this.props.AuthStore.isSuccess)
+      || TokenService.isAuthenticated()) {
+      return (
+        <Switch>
+          <PrivateRoute path="/home" component={Home} />
+          <Redirect from="/" to="/home" />
+        </Switch>
+      );
+    } else {
+      return (
+        <Switch>
+          <Route path="/" exact component={SignIn} />
+          <Redirect to="/" />
+        </Switch>
+      );
+    }
+  }
 
-  public render() {
-    console.log('render', renderCounter++, this.props);
-    
+  render(): JSX.Element {
+
     return (
-      
       <div className="App">
-        <MuiThemeProvider theme={createMuiTheme()}>
-          <SignIn />
-          <Message {...this.props}/>
-        </MuiThemeProvider>
+          {this.renderRoutesOrSignIn()}
+          <Message {...this.props} />
+        
       </div>
     );
   }
 }
 
-export default withRouter(App);
+export default App;

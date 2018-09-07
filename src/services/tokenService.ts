@@ -2,7 +2,7 @@ import { RootState } from "../RootState";
 
 class TokenService {
 
-  public isAuthenticated = () => {
+  public static isAuthenticated = () => {
     try {
       const serializedState = localStorage.getItem('state');
       if (serializedState === 'null') {

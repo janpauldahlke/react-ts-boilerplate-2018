@@ -30,9 +30,9 @@ class GlobalMessage extends React.Component<IGlobalMessageProps, IGlobalMessageS
     }
   }
 
-  componentWillReceiveProps(newProps: any) {
+  componentWillReceiveProps(newProps: IGlobalMessageProps) {
     this.setState({
-      open: newProps.ErrorStore.isError
+      open: newProps.ErrorStore ? newProps.ErrorStore.isError : false,
     });
   }
  

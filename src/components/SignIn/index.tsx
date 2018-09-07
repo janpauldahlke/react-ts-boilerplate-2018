@@ -20,8 +20,7 @@ import {
 
 //to use decorators
 import { compose }  from 'recompose';
-import TokenService from '../../services/tokenService';
-import { withRouter, RouteComponentProps, Redirect } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 
 //-----------------------------------------//
@@ -82,16 +81,6 @@ class SignIn extends React.Component<ISignProps, ISignState> {
     password: '',
   };
   
-  //lifecycle
-  componentWillMount() {
-    const tokenService = new TokenService();
-    const isAuthenticated = tokenService.isAuthenticated();
-
-    if(isAuthenticated) {
-      this.props.history.push('/home');
-    }
-  }
-
   //generic onInputChange
   onInputChange = (e: React.ChangeEvent<HTMLInputElement>) :void => {
     this.setState({
@@ -124,14 +113,7 @@ class SignIn extends React.Component<ISignProps, ISignState> {
   render() {
 
     const {classes} = this.props;
-    const tokenService = new TokenService();
-    const isAuthenticated = tokenService.isAuthenticated();
-
-    if(isAuthenticated && this.props.AuthStore.isSuccess) {
-      return (
-        <Redirect to="/home" />
-      );
-    }
+    
       return (
         <React.Fragment>
           <CssBaseline />
