@@ -1,6 +1,6 @@
 # Instant-Data React-Typescript-Boilerplate
 
-It is created via the CLI-Tool ```create-react-app <your-appname> --scripts-version=react-scripts-ts``` and customized to our needs
+It is created via the CLI-Tool ```create-react-app <your-appname> --scripts-version=react-scripts-ts``` and customized to our needs.
 
 ## Folder Structure
 
@@ -129,20 +129,42 @@ The pattern is to have all these inside one duck:
 * initialStore
 
 
-### ErrorComponent
+### Message Component
 
 There is a rudimental example prepared in this boilerplate, that shows usage and consumption of a high level
-message or error-component.
-Import the ErrorDuck inside the Ducks that you want the Errors to be catched.
-dispatch them in the thunk-part in the `.catch((err) => {})`
+message or notification-component.
+Import the NofictationDuck inside the Ducks that you want the Errorsto  to be catched.
+dispatch them in the thunk-part in the
+```
+import NotificationDuck from '~/src/ducks/notification';
+
+your.action()
+  .then(() => /* success */)
+  .catch((err) => {
+      dispatch(NotificationDuck.throwNotificationWithError({text: 'your text', title: 'your title'}))
+  })
+  ```
+But you can also connect them directly to components. Please keep in mind to reset the NotificationStore, with the `RESET_NOTIFICATION_STORE` action! 
 
 
 ### Store
 
-Use the folder `src/store` to configure the store of redux according to your needs. There is also the possibilty to subscribe parts of the store to your localStorage. To do so check the `index.ts` and have a brief look at the store subscribe pattern. There is plenty oof space for you to connect the parts of the store you wish to the localStorage.
+Use the folder `src/store` to configure the store of redux according to your needs. There is also the possibilty to subscribe parts of the store to your localStorage. To do so check the `index.ts` and have a brief look at the store subscribe pattern.
+
+```
+store.subscribe(throttle(() => {
+  const storage = store.getState() as RootState;
+  const AuthStore = storage.AuthStore;
+
+  saveState({
+    AuthStore
+  } as RootState);
+}, 300));
+```
+Please make use of the `throttle` helper. `JSON.parse()/JSON.stringyfy` are expensive in Javascript.
 
 ### Services
 
-Anything you want to consume repetitive belongs to the services. Another word could be globalHelpers.<b>
-> TokenService -> `const tokenService = new TokenService();` `tokenService.isAuthenticated()` returns the truth according to the localStorage. One might want to adapt it.
+Anything you want to consume repetitive belongs to the services. Another word could be globalHelpers.  
+TokenService is a static so it can be used like this-> `import TokenService from '../services/tokenService';`   `TokenService.isAuthenticated()` returns the truth according to the localStorage. One might want to adapt it.
 
