@@ -4,11 +4,11 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 
 import history from './history';
 import { loadState, saveState } from './localStorage';
-import throttle from '../services/throttle';
+import { throttle } from 'lodash';
 import { rootReducer, RootInitialState, RootState } from '../RootState';
 
 let persistedState = RootInitialState.getInitialState();
-persistedState = {...loadState()};
+persistedState = { ...loadState() };
 const store = createStore(
   connectRouter(history)(rootReducer),
   persistedState,
@@ -18,7 +18,7 @@ const store = createStore(
     compose(
       applyMiddleware(ReduxThunk.default, routerMiddleware(history)),
       (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-    ) 
+    )
     :
     applyMiddleware(ReduxThunk.default, routerMiddleware(history))
 );
@@ -28,10 +28,13 @@ store.subscribe(throttle(() => {
   //  this is how to bind only parts of the store to the localStorage
   const storage = store.getState() as RootState;
   const AuthStore = storage.AuthStore;
-
-  saveState({
-    AuthStore // es6 condensation
-  } as RootState);
+  if (JSON.stringify(AuthStore.isSuccess) != JSON.stringify(persistedState.AuthStore.isSuccess)) {
+    console.log('Auth changed; Saving to local storage', AuthStore, persistedState.AuthStore);
+    persistedState.AuthStore = AuthStore;
+    saveState({
+      AuthStore // es6 condensation
+    } as RootState);
+  }
 }, 300));
 
 export default store;

@@ -1,4 +1,4 @@
-import  { Action } from 'redux';
+import { Action } from 'redux';
 import axios, { AxiosInstance } from 'axios';
 
 //to be able to dispatch Errors to the Errorcomponent
@@ -17,13 +17,13 @@ import NotificationDuck from '../notification';
  */
 
 //axios instance
-const ax = () : AxiosInstance => {
+const ax = (): AxiosInstance => {
   const baseURL = process.env.REACT_APP_EXAMPLE;
 
   return axios.create({
     baseURL,          //condense key:value
     timeout: 5000,
-    headers : {
+    headers: {
       //your headers here
     }
   });
@@ -34,40 +34,40 @@ const ax = () : AxiosInstance => {
 enum AuthActions {
   GET_AUTH = 'GET_AUTH',
   GET_AUTH_SUCCESS = 'GET_AUTH_SUCCESS',
-  GET_AUTH_FAILURE = 'GET_AUTH_FAILURE', 
+  GET_AUTH_FAILURE = 'GET_AUTH_FAILURE',
   LOGOUT = 'LOGOUT',
 }
-  //------------------------------
+//------------------------------
 
 //action Types
 type getAuthActionType = { type: string };
-type getAuthSuccessActionType = { type: string, auth: Auth};
-type getAuthFailureActionType = { type: string, error: Error}; //will error work here as type?
-type logOutActionType = { type: string};
+type getAuthSuccessActionType = { type: string, auth: Auth };
+type getAuthFailureActionType = { type: string, error: Error }; //will error work here as type?
+type logOutActionType = { type: string };
 //------------------------------
 
 //let the class begin
 export default class AuthDuck {
-  
+
   //action creators
-  public static getAuthAction = () : getAuthActionType => ({
+  public static getAuthAction = (): getAuthActionType => ({
     type: AuthActions.GET_AUTH,
   })
-  public static getAuthSuccessAction = (auth: Auth) : getAuthSuccessActionType => ({
+  public static getAuthSuccessAction = (auth: Auth): getAuthSuccessActionType => ({
     type: AuthActions.GET_AUTH_SUCCESS,
     auth
   })
-  public static getAuthFailureAction = (error: Error) : getAuthFailureActionType => ({
+  public static getAuthFailureAction = (error: Error): getAuthFailureActionType => ({
     type: AuthActions.GET_AUTH_FAILURE,
     error
   })
-  public static logOutAction = () : logOutActionType => ({
+  public static logOutAction = (): logOutActionType => ({
     type: AuthActions.LOGOUT,
   })
   //---------------------------
 
   //reducer functions
-  public static getAuthReducerFunction(state: AuthStore) : AuthStore {
+  public static getAuthReducerFunction(state: AuthStore): AuthStore {
     //react tipp: return a new object of state, respect its immutability do not JSON hack state
     let newState = Object.assign({}, state);
     newState = {
@@ -78,40 +78,40 @@ export default class AuthDuck {
     return newState;
   }
 
-  public static getAuthSuccessReducerFunction(state: AuthStore, action: getAuthSuccessActionType) : AuthStore {
+  public static getAuthSuccessReducerFunction(state: AuthStore, action: getAuthSuccessActionType): AuthStore {
     let newState = Object.assign({}, state);
     newState = {
       isLoading: false,
       isSuccess: true,
-      Auth : action.auth
+      Auth: action.auth
     };
     return newState;
   }
 
-  public static getAuthFailureReducerFunction(state: AuthStore, action : getAuthFailureActionType) : AuthStore {
+  public static getAuthFailureReducerFunction(state: AuthStore, action: getAuthFailureActionType): AuthStore {
     let newState = Object.assign({}, state);
     newState = {
       isLoading: false,
       isSuccess: false,
-      Auth : {} as Auth,
+      Auth: {} as Auth,
       errorMessage: action.error.message
     };
     return newState;
   }
-  public static logOutReducerFunction(state: AuthStore) : AuthStore {
+  public static logOutReducerFunction(state: AuthStore): AuthStore {
     let newState = Object.assign({}, state);
     newState = {
       isLoading: false,
       isSuccess: false,
-      Auth : {} as Auth,
+      Auth: {} as Auth,
     };
     return newState;
   }
   //---------------------------
 
   //mainreducer, maybe you will write the initialStore before this?
-  public static reducer = (state: AuthStore = AuthDuck.InitialAuthStore, action: Action<any>) => {
-    switch(action.type) {
+  public static reducer = (state: AuthStore = AuthDuck.getInitialAuthStore(), action: Action<any>) => {
+    switch (action.type) {
       case AuthActions.GET_AUTH:
         return AuthDuck.getAuthReducerFunction(state);
       case AuthActions.GET_AUTH_SUCCESS:
@@ -119,7 +119,7 @@ export default class AuthDuck {
       case AuthActions.GET_AUTH_FAILURE:
         return AuthDuck.getAuthFailureReducerFunction(state, action as getAuthFailureActionType);
       case AuthActions.LOGOUT:
-        return AuthDuck.logOutReducerFunction(state);      
+        return AuthDuck.logOutReducerFunction(state);
       default:
         return state;
     }
@@ -128,30 +128,30 @@ export default class AuthDuck {
 
   // thunk
   public static getAuth() {
-    return function(dispatch: any) : Promise<void> {
+    return function (dispatch: any): Promise<void> {
       //we dispatch here to be set the state to loading
       dispatch(AuthDuck.getAuthAction());
       //we make use of the axios instance
       return ax().get('/Authentication')
         .then((res) => {
           dispatch(AuthDuck.getAuthSuccessAction(res.data));
-         })
+        })
         .catch((err: Error) => {
           //inside here we dispatch FailureAction
           //improve this by error component //done
-          dispatch(NotificationDuck.throwNotificationWithMessage({text: err.message, title: 'getAuth Error'}));
+          dispatch(NotificationDuck.throwNotificationWithMessage({ text: err.message, title: 'getAuth Error' }));
         });
     };
   }
   public static logOut() {
-    return function(dispatch: any) {
+    return function (dispatch: any) {
       return dispatch(AuthDuck.logOutAction());
     };
   }
   //---------------------------
 
   //initialState
-  public static InitialAuth : Auth = {
+  public static InitialAuth: Auth = {
     access_token: null, // or better undefined or string if InitialAuth.access_token
     token_type: null,
     expires_in: null,
@@ -164,12 +164,27 @@ export default class AuthDuck {
     ".expires": null,
   };
 
-  public static InitialAuthStore: AuthStore = {
-    isLoading: false,
-    isSuccess: false,
-    Auth: AuthDuck.InitialAuth,
-  };
-   //---------------------------
+  public static getInitialAuthStore(): AuthStore {
+    try {
+      //Try to read from locaStorage
+      const serializedState: string = localStorage.getItem('state') as string;
+      const state = JSON.parse(serializedState);
+      if (state.AuthStore.Auth.access_token &&
+        state.AuthStore.Auth.access_token.length > 0
+      ) {
+        return state.AuthStore;
+      }
+    } catch (err) {
+      //reading from localStorage failed;
+    }
+    // initialize empty object
+    return {
+      isLoading: false,
+      isSuccess: false,
+      Auth: AuthDuck.InitialAuth,
+    };
+  }
+  //---------------------------
 
 }
 
