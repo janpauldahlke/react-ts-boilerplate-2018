@@ -82,7 +82,13 @@ You can, however, create more top-level directories.
 They will not be included in the production build so you can use them for things like documentation.
 
 
-### Material-UI and Decorators
+## Debugging and DevTools
+
+We strongly suggest you to install and use theses BrowserExtensions.  
+* [redux-devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
+* [react-devtools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+
+## Material-UI and Decorators
 
 The experimental feature for Decorators is activated in the tsconfig.json. By this it is possible to use
 the withStyle decorator in combination with `compose` of the `recompose package`. 
@@ -105,7 +111,7 @@ To make use of themes in material-ui we need to wrap the content inside a
 [https://material-ui.com/customization/themes/](https://material-ui.com/customization/themes/)
 
 
-### Environment
+## Environment
 
 There is the possibility to provide ENV variables. use the `.env` file for this.
 Please note, they need to follow the naming convention of `REACT_APP_` `EXAMPLE=FOOBAR`.
@@ -113,14 +119,14 @@ Inside the project one can consume them by `proccess.env.REACT_APP_EXAMPLE`.
 At a new start its set to the seedings path, so one might want to change it there.
 
 
-### HTTP Requests
+## HTTP Requests
 
 Please use axios for your requests. It supports Promises and also async/await.
 [https://github.com/axios/axios](https://github.com/axios/axios)
 Also make sure the allow crossorigin-access on your server.
 
 
-### Ducks
+## Ducks
 
 We follow the 'Ducks'-Pattern to structure our application. Get insights on this specc here
 [https://github.com/erikras/ducks-modular-redux](https://github.com/erikras/ducks-modular-redux) 
@@ -135,7 +141,7 @@ The pattern is to have all these inside one duck:
 * initialStore
 
 
-### Message Component
+## Message Component
 
 There is a rudimental example prepared in this boilerplate, that shows usage and consumption of a high level
 message or notification-component.
@@ -153,7 +159,7 @@ your.action()
 But you can also connect them directly to components. Please keep in mind to reset the NotificationStore, with the `RESET_NOTIFICATION_STORE` action! 
 
 
-### Store
+## Store
 
 Use the folder `src/store` to configure the store of redux according to your needs. There is also the possibilty to subscribe parts of the store to your localStorage. To do so check the `index.ts` and have a brief look at the store subscribe pattern.
 
@@ -169,7 +175,7 @@ store.subscribe(throttle(() => {
 ```
 Please make use of the `throttle` helper. `JSON.parse()/JSON.stringyfy` are expensive in Javascript.
 
-### Services
+## Services
 
 Anything you want to consume repetitive belongs to the services. Another word could be globalHelpers.  
 TokenService is a static so it can be used like this-> `import TokenService from '../services/tokenService';`   `TokenService.isAuthenticated()` returns the truth according to the localStorage. One might want to adapt it.
