@@ -116,7 +116,7 @@ export default class AuthDuck {
 
   // thunk
   public static getAuth() {
-    return function (dispatch: any, getState:()=>RootState): Promise<void> {
+    return function (dispatch: any, getState:() => RootState): Promise<void> {
       //we dispatch here to be set the state to loading
       dispatch(AuthDuck.getAuthAction());
       //we make use of the axios instance
@@ -152,7 +152,7 @@ export default class AuthDuck {
     ".expires": null,
   };
 
-  public static getInitialAuthStore(): AuthStore {
+  public static getInitialAuthStore(): AuthStore | any {
     try {
       //Try to read from localStorage
       const serializedState: string = localStorage.getItem('state') as string;
@@ -163,7 +163,11 @@ export default class AuthDuck {
         return state.AuthStore;
       }
     } catch (err) {
-      //reading from localStorage failed;
+      return function(dispatch: any) {
+        //abuse dispatch here to throw error
+        //how can one test it?
+        dispatch(NotificationDuck.throwNotificationWithMessage({title: 'localStorage', text: 'can not access localStorage'}));
+      };
     }
     // initialize empty object
     return {

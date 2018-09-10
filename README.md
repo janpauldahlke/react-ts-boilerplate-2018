@@ -131,7 +131,7 @@ Also make sure the allow crossorigin-access on your server.
 We follow the 'Ducks'-Pattern to structure our application. Get insights on this specc here
 [https://github.com/erikras/ducks-modular-redux](https://github.com/erikras/ducks-modular-redux) 
 The pattern is to have all these inside one duck:
-* axios (instancefactory)
+
 * action enum
 * action types
 * action creators
@@ -173,10 +173,34 @@ store.subscribe(throttle(() => {
   } as RootState);
 }, 300));
 ```
-Please make use of the `throttle` helper. `JSON.parse()/JSON.stringyfy` are expensive in Javascript.
+Please make use of the `throttle` lodash-helper. `JSON.parse()/JSON.stringyfy` are expensive in Javascript.
 
 ## Services
 
 Anything you want to consume repetitive belongs to the services. Another word could be globalHelpers.  
-TokenService is a static so it can be used like this-> `import TokenService from '../services/tokenService';`   `TokenService.isAuthenticated()` returns the truth according to the localStorage. One might want to adapt it.
+
+* apicontroller -> an axois instance the can be configured. import it into your ducks to make `http`-verbs.
+* authenticationService -> can be used in conjunction with apicontroller inside of ducks to verify auth-Status
+
+inside your duck - an example usage in thunk
+```
+import axios from '../../services/apicontroller';
+
+public static getAuth() {
+    return function (dispatch: any, getState:() => RootState): Promise<void> {
+      dispatch(AuthDuck.getAuthAction());
+
+      //return the axois object with header, pass the state by `getState()` to auth and GET the route with `get('/yourRoute')`
+
+      return axios(getState()).get('/Authentication')
+        .then((res) => {
+          dispatch(AuthDuck.getAuthSuccessAction(res.data));
+         })
+        .catch((err: Error) => {
+          /**
+        });
+    };
+  }
+```
+
 

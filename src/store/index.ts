@@ -29,7 +29,6 @@ store.subscribe(throttle(() => {
   const storage = store.getState() as RootState;
   const AuthStore = storage.AuthStore;
   if (JSON.stringify(AuthStore.isSuccess) != JSON.stringify(persistedState.AuthStore.isSuccess)) {
-    console.log('Auth changed; Saving to local storage', AuthStore, persistedState.AuthStore);
     persistedState.AuthStore = AuthStore;
     saveState({
       AuthStore // es6 condensation
