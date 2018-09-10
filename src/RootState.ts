@@ -11,7 +11,7 @@ export class RootState {
 export class RootInitialState {
   public static getInitialState() : RootState {
     const state: RootState = {
-      AuthStore: AuthDuck.InitialAuthStore,
+      AuthStore: AuthDuck.getInitialAuthStore(),
       NotificationStore: NotificationDuck.InitialNotificationStore,
     };
     return state;

@@ -1,18 +1,23 @@
 import * as React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import TokenService from '../services/tokenService';
+import { connect } from 'react-redux';
+import { RootState } from "../RootState";
 
-const ProtectedRoute = ({component: Component, ...rest} : any ) => (
+const ProtectedRoute = ({ component: Component, ...rest }: any) => (
   <Route {...rest}
     render={(props) => {
-      
-      return(
-         TokenService.isAuthenticated() ?
+      return (
+        rest.isAuthenticated ?
           <Component {...props} /> :
           <Redirect to="/" />
-        );
+      );
     }}
   />
 );
-
-export default ProtectedRoute;
+const mapStateToProps = (state: RootState): { isAuthenticated: boolean } => {
+  return {
+    isAuthenticated: state.AuthStore && state.AuthStore.isSuccess
+  };
+};
+// export protectede route that is connected to the Authstore of the Rootstore
+export default connect(mapStateToProps)(ProtectedRoute);

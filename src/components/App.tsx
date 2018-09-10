@@ -12,7 +12,6 @@ export interface IAppProps extends RouteComponentProps<any> {
   throwNotificationWithMessage?: (msg: _Notification) => void;
   resetNotificationStore?: () => void;
 }
-import TokenService from '../services/tokenService';
 
 export interface IAppState {
   // your state
@@ -26,8 +25,7 @@ class App extends React.Component<IAppProps, IAppState> {
     //your state
   };
   private renderRoutesOrSignIn() {
-    if ((this.props.AuthStore && this.props.AuthStore.isSuccess)
-      || TokenService.isAuthenticated()) {
+    if ((this.props.AuthStore && this.props.AuthStore.isSuccess)) {
       return (
         <Switch>
           <ProtectedRoute path="/home" component={Home} />
