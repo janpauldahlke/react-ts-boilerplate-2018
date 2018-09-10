@@ -164,12 +164,27 @@ export default class AuthDuck {
     ".expires": null,
   };
 
-  public static InitialAuthStore: AuthStore = {
-    isLoading: false,
-    isSuccess: false,
-    Auth: AuthDuck.InitialAuth,
-  };
-   //---------------------------
-
+  public static getInitialAuthStore(): AuthStore {
+    try {
+      //Try to read from locaStorage
+      const serializedState: string = localStorage.getItem('state') as string;
+      const state = JSON.parse(serializedState);
+      if (state.AuthStore.Auth.access_token &&
+        state.AuthStore.Auth.access_token.length > 0
+      ) {
+        return state.AuthStore;
+      }
+    } catch (err) {
+      //reading from localStorage failed;
+    }
+    // initialize empty object
+    return {
+      isLoading: false,
+      isSuccess: false,
+      Auth: AuthDuck.InitialAuth,
+    };
+  }
+  //---------------------------
+ 
 }
 
