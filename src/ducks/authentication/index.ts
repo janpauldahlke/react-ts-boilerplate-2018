@@ -35,6 +35,7 @@ enum AuthActions {
   GET_AUTH = 'GET_AUTH',
   GET_AUTH_SUCCESS = 'GET_AUTH_SUCCESS',
   GET_AUTH_FAILURE = 'GET_AUTH_FAILURE', 
+  LOGOUT = 'LOGOUT',
 }
   //------------------------------
 
@@ -42,6 +43,7 @@ enum AuthActions {
 type getAuthActionType = { type: string };
 type getAuthSuccessActionType = { type: string, auth: Auth};
 type getAuthFailureActionType = { type: string, error: Error}; //will error work here as type?
+type logOutActionType = { type: string};
 //------------------------------
 
 //let the class begin
@@ -58,6 +60,9 @@ export default class AuthDuck {
   public static getAuthFailureAction = (error: Error) : getAuthFailureActionType => ({
     type: AuthActions.GET_AUTH_FAILURE,
     error
+  })
+  public static logOutAction = () : logOutActionType => ({
+    type: AuthActions.LOGOUT,
   })
   //---------------------------
 
@@ -93,6 +98,15 @@ export default class AuthDuck {
     };
     return newState;
   }
+  public static logOutReducerFunction(state: AuthStore) : AuthStore {
+    let newState = Object.assign({}, state);
+    newState = {
+      isLoading: false,
+      isSuccess: false,
+      Auth : {} as Auth,
+    };
+    return newState;
+  }
   //---------------------------
 
   //mainreducer, maybe you will write the initialStore before this?
@@ -103,7 +117,9 @@ export default class AuthDuck {
       case AuthActions.GET_AUTH_SUCCESS:
         return AuthDuck.getAuthSuccessReducerFunction(state, action as getAuthSuccessActionType);
       case AuthActions.GET_AUTH_FAILURE:
-        return AuthDuck.getAuthFailureReducerFunction(state, action as getAuthFailureActionType);    
+        return AuthDuck.getAuthFailureReducerFunction(state, action as getAuthFailureActionType);
+      case AuthActions.LOGOUT:
+        return AuthDuck.logOutReducerFunction(state);      
       default:
         return state;
     }
@@ -125,6 +141,11 @@ export default class AuthDuck {
           //improve this by error component //done
           dispatch(ErrorDuck.throwErroWithMessage({text: err.message, title: 'getAuth Error'}));
         });
+    };
+  }
+  public static logOut() {
+    return function(dispatch: any) {
+      return dispatch(AuthDuck.logOutAction());
     };
   }
   //---------------------------

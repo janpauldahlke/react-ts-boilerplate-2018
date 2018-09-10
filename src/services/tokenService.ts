@@ -2,9 +2,9 @@ import { RootState } from "../RootState";
 
 class TokenService {
 
-  public static isAuthenticated = () => {
+  public static isAuthenticated = () : boolean => {
     try {
-      const serializedState = localStorage.getItem('state');
+      const serializedState : string | null = localStorage.getItem('state');
       if (serializedState === 'null') {
         return false;
       } else {

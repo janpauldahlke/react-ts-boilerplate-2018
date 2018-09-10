@@ -20,8 +20,6 @@ import {
 
 //to use decorators
 import { compose }  from 'recompose';
-import { withRouter, RouteComponentProps } from 'react-router';
-
 
 //-----------------------------------------//
 //the css as javascripts object is a valid strategy, but one need to use it to style materialUI
@@ -61,7 +59,7 @@ const styles = (theme: Theme) :StyleRules => ({
 //-----------------------------------------//
 //interfaces for props and state
 
-export interface ISignProps extends RouteComponentProps<{}> {
+export interface ISignProps {
   classes? : any;
   AuthStore: AuthStore;
   getAuth? : () => Promise<void>;
@@ -89,9 +87,10 @@ class SignIn extends React.Component<ISignProps, ISignState> {
     } as ISignState);
   }
 
-  //functions
-  //beware we are grabing password and fake validating it in frontend. consider this a stub and remove it
-  private fakeCheckCredentialsAndMakeAuthRequest = (e: any) : Promise<void> | void=> {
+  //  beware we are grabing password and fake validating it in frontend. 
+  //  consider this a stub and remove it. place your own action that troigges in a duck
+  //  after you connected the SigIn in a Container
+  private checkCredentialsAndAuth = (e: any) : Promise<void> | void=> {
     
     e.preventDefault();
  
@@ -150,7 +149,7 @@ class SignIn extends React.Component<ISignProps, ISignState> {
                   variant="raised"
                   color="primary"
                   className={classes.submit}
-                  onClick={this.fakeCheckCredentialsAndMakeAuthRequest}
+                  onClick={this.checkCredentialsAndAuth}
                 >
                   Sign in
                 </Button>
@@ -162,5 +161,4 @@ class SignIn extends React.Component<ISignProps, ISignState> {
   }
 }
 
-
-export default withRouter(SignIn);
+export default SignIn;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import TokenService from '../services/tokenService';
 
-const PrivateRoute = ({component: Component, ...rest} : any ) => (
+const ProtectedRoute = ({component: Component, ...rest} : any ) => (
   <Route {...rest}
     render={(props) => {
       
@@ -15,4 +15,4 @@ const PrivateRoute = ({component: Component, ...rest} : any ) => (
   />
 );
 
-export default PrivateRoute;
+export default ProtectedRoute;

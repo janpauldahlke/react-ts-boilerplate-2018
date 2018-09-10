@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps, Redirect, Switch, Route } from 'react-router-dom';
-import PrivateRoute from '../routes/privateRoutes';
+import ProtectedRoute from '../routes/protectedRoutes';
 
 import Message from '../components/message';
 import Home from '../components/Home';
@@ -30,7 +30,7 @@ class App extends React.Component<IAppProps, IAppState> {
       || TokenService.isAuthenticated()) {
       return (
         <Switch>
-          <PrivateRoute path="/home" component={Home} />
+          <ProtectedRoute path="/home" component={Home} />
           <Redirect from="/" to="/home" />
         </Switch>
       );
