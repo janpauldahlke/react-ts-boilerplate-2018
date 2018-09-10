@@ -110,7 +110,7 @@ export default class AuthDuck {
   //---------------------------
 
   //mainreducer, maybe you will write the initialStore before this?
-  public static reducer = (state: AuthStore = AuthDuck.InitialAuthStore, action: Action<any>) => {
+  public static reducer = (state: AuthStore = AuthDuck.getInitialAuthStore(), action: Action<any>) => {
     switch(action.type) {
       case AuthActions.GET_AUTH:
         return AuthDuck.getAuthReducerFunction(state);
