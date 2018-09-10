@@ -48,7 +48,7 @@ class App extends React.Component<IAppProps, IAppState> {
       <div className="App">
           {this.renderRoutesOrSignIn()}
           <Message {...this.props} />
-        
+         
       </div>
     );
   }

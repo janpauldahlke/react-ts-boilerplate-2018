@@ -29,3 +29,4 @@ const mapDispatchToProps = (dispatch: any) : IAppProps => {
 export default withRouter(
   connect<{}, IAppProps>
   (mapStateToProps, mapDispatchToProps)(App) as any);
+ 
