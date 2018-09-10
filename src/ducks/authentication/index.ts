@@ -185,6 +185,6 @@ export default class AuthDuck {
     };
   }
   //---------------------------
-
+ 
 }
 

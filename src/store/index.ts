@@ -37,4 +37,4 @@ store.subscribe(throttle(() => {
   }
 }, 300));
 
-export default store;
+export default store;  
