@@ -2,6 +2,37 @@
 
 It is created via the CLI-Tool ```create-react-app <your-appname> --scripts-version=react-scripts-ts``` and customized to our needs.
 
+## Prequisites
+
+Installed node and npm Version 8 or higher.
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.
+You will also see any lint errors in the console.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.
+Your app is ready to be deployed!
+
+### `npm run seed` Authentication seed
+
+To make the boilerplate work from scratch, and to simulate the flow of Auth, we put a JSON-Server.
+You should remove the complete seed folder, or better add it to your .gitignore, when you got the workflow
+To make use of it simply `npm run seed`. You will get served at `json-server --port 4000 --watch -- seed/db.json`.
+
+
 ## Folder Structure
 
 After creation, your project should look like this:
@@ -50,31 +81,6 @@ Read instructions below for using assets from JavaScript and HTML.
 You can, however, create more top-level directories.
 They will not be included in the production build so you can use them for things like documentation.
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.
-You will also see any lint errors in the console.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
-
-### `npm run seed` Authentication seed
-
-To make the boilerplate work from scratch, and to simulate the flow of Auth, we put a JSON-Server.
-You should remove the complete seed folder, or better add it to your .gitignore, when you got the workflow
-To make use of it simply `npm run seed`. You will get served at `json-server --port 4000 --watch -- seed/db.json`.
 
 ### Material-UI and Decorators
 
