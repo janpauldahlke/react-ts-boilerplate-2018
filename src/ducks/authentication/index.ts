@@ -2,7 +2,7 @@ import  { Action } from 'redux';
 import axios, { AxiosInstance } from 'axios';
 
 //to be able to dispatch Errors to the Errorcomponent
-import ErrorDuck from '../error';
+import NotificationDuck from '../notification';
 
 /* 
   Follow this pattern!
@@ -139,7 +139,7 @@ export default class AuthDuck {
         .catch((err: Error) => {
           //inside here we dispatch FailureAction
           //improve this by error component //done
-          dispatch(ErrorDuck.throwErroWithMessage({text: err.message, title: 'getAuth Error'}));
+          dispatch(NotificationDuck.throwNotificationWithMessage({text: err.message, title: 'getAuth Error'}));
         });
     };
   }

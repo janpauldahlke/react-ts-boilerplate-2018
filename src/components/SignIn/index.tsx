@@ -62,8 +62,8 @@ const styles = (theme: Theme) :StyleRules => ({
 export interface ISignProps {
   classes? : any;
   AuthStore: AuthStore;
-  getAuth? : () => Promise<void>;
-  throwErrorWithMessage? : (msg: _Error) => void;
+  getAuth? : () => void;
+  throwNotificationWithMessage? : (msg: _Notification) => void;
 }
 export interface ISignState {
   email: string;
@@ -102,14 +102,14 @@ class SignIn extends React.Component<ISignProps, ISignState> {
         this.props.getAuth();
       }
     } else {
-      if(typeof this.props.throwErrorWithMessage === 'function') {
-        this.props.throwErrorWithMessage({title: 'Wrong Credentials', text: 'Please make sure to pass correct credentials'});
+      if(typeof this.props.throwNotificationWithMessage === 'function') {
+        this.props.throwNotificationWithMessage({title: 'Wrong Credentials', text: 'Please make sure to pass correct credentials'});
       }
     }
   }
 
   //render
-  render() {
+  render(): JSX.Element {
 
     const {classes} = this.props;
     

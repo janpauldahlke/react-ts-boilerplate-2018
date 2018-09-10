@@ -7,10 +7,10 @@ import Home from '../components/Home';
 import SignIn from '../containers/SignInContainer';
 
 export interface IAppProps extends RouteComponentProps<any> {
-  ErrorStore?: ErrorStore;
+  NotificationStore?: NotificationStore;
   AuthStore?: AuthStore;
-  throwErroWithMessage?: (msg: _Error) => void;
-  resetErrorStore?: () => void;
+  throwNotificationWithMessage?: (msg: _Notification) => void;
+  resetNotificationStore?: () => void;
 }
 import TokenService from '../services/tokenService';
 

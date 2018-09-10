@@ -7,8 +7,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
 export interface IGlobalMessageProps {
-  ErrorStore? : ErrorStore;
-  resetErrorStore?: () => void;
+  NotificationStore? : NotificationStore;
+  resetNotificationStore?: () => void;
 }
 
 export interface IGlobalMessageState {
@@ -25,14 +25,14 @@ class GlobalMessage extends React.Component<IGlobalMessageProps, IGlobalMessageS
     this.setState({
       open: false
     });
-    if(typeof this.props.resetErrorStore === 'function') {
-      this.props.resetErrorStore();
+    if(typeof this.props.resetNotificationStore === 'function') {
+      this.props.resetNotificationStore();
     }
   }
 
   componentWillReceiveProps(newProps: IGlobalMessageProps) {
     this.setState({
-      open: newProps.ErrorStore ? newProps.ErrorStore.isError : false,
+      open: newProps.NotificationStore ? newProps.NotificationStore.isNotification : false,
     });
   }
  
@@ -40,7 +40,7 @@ class GlobalMessage extends React.Component<IGlobalMessageProps, IGlobalMessageS
       
     return(
       <div>
-        {(this.props.ErrorStore && this.props.ErrorStore.isError) && (
+        {(this.props.NotificationStore && this.props.NotificationStore.isNotification) && (
           <Dialog
           open={this.state.open}
           onClose={() => {
@@ -48,11 +48,11 @@ class GlobalMessage extends React.Component<IGlobalMessageProps, IGlobalMessageS
           }}
         >
           <DialogTitle>
-          {this.props.ErrorStore.Error.title}
+          {this.props.NotificationStore.Notification.title}
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              {this.props.ErrorStore.Error.text}
+              {this.props.NotificationStore.Notification.text}
             </DialogContentText>
           </DialogContent>
           <DialogActions>

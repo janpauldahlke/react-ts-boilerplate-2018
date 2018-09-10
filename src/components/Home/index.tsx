@@ -17,7 +17,7 @@ class Home extends React.Component<IHomeProps,{}> {
     store.dispatch(AuthDuck.logOut() as any);
   }
 
-  render() {
+  render(): JSX.Element {
     return(
       <div>
         <div>welcome to home</div>

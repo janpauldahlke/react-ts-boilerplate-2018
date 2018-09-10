@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { RootState } from '../../RootState';
 
-import ErrorDuck from '../../ducks/error';
+import NotificationDuck from '../../ducks/notification';
 import { withRouter } from 'react-router-dom';
 
 import App, {IAppProps} from '../../components/App';
@@ -10,24 +10,22 @@ import App, {IAppProps} from '../../components/App';
 
 const mapStateToProps = (state: RootState) : {} => {
   return {
-    ErrorStore: state.ErrorStore,
+    NotificationStore: state.NotificationStore,
     AuthStore: state.AuthStore,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) : IAppProps => {
   return {
-    throwErroWithMessage: (msg: _Error) => {
-      dispatch(ErrorDuck.throwErroWithMessage(msg));
+    throwNotificationWithMessage: (msg: _Notification) => {
+      dispatch(NotificationDuck.throwNotificationWithMessage(msg));
     },
-    resetErrorStore: () => {
-      dispatch(ErrorDuck.resetErrorStore());
+    resetNotificationStore: () => {
+      dispatch(NotificationDuck.resetNotificationStore());
     },
   } as IAppProps;
 };
 
-
 export default withRouter(
   connect<{}, IAppProps>
   (mapStateToProps, mapDispatchToProps)(App) as any);
-//export default connect<{}, IAppProps>(mapStateToProps, mapDispatchToProps)(App);
