@@ -1,8 +1,8 @@
-import  { Action } from 'redux';
-import axios, { AxiosInstance } from 'axios';
-
+import { Action } from 'redux';
+import axios from '../../services/apicontroller';
 //to be able to dispatch Errors to the Errorcomponent
 import NotificationDuck from '../notification';
+import { RootState } from '../../RootState';
 
 /* 
   Follow this pattern!
@@ -16,18 +16,6 @@ import NotificationDuck from '../notification';
   * initialStore
  */
 
-//axios instance
-const ax = () : AxiosInstance => {
-  const baseURL = process.env.REACT_APP_EXAMPLE;
-
-  return axios.create({
-    baseURL,          //condense key:value
-    timeout: 5000,
-    headers : {
-      //your headers here
-    }
-  });
-};
 //------------------------------
 
 //action enum
@@ -128,11 +116,11 @@ export default class AuthDuck {
 
   // thunk
   public static getAuth() {
-    return function(dispatch: any) : Promise<void> {
+    return function (dispatch: any, getState:()=>RootState): Promise<void> {
       //we dispatch here to be set the state to loading
       dispatch(AuthDuck.getAuthAction());
       //we make use of the axios instance
-      return ax().get('/Authentication')
+      return axios(getState()).get('/Authentication')
         .then((res) => {
           dispatch(AuthDuck.getAuthSuccessAction(res.data));
          })
@@ -166,7 +154,7 @@ export default class AuthDuck {
 
   public static getInitialAuthStore(): AuthStore {
     try {
-      //Try to read from locaStorage
+      //Try to read from localStorage
       const serializedState: string = localStorage.getItem('state') as string;
       const state = JSON.parse(serializedState);
       if (state.AuthStore.Auth.access_token &&
