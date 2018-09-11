@@ -1,4 +1,4 @@
-# Instant-Data React-Typescript-Boilerplate
+#  React-Typescript-Boilerplate
 
 It is created via the CLI-Tool ```create-react-app <your-appname> --scripts-version=react-scripts-ts``` and customized to our needs.
 
