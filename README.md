@@ -94,21 +94,22 @@ The experimental feature for Decorators is activated in the tsconfig.json. By th
 the withStyle decorator in combination with `compose` of the `recompose package`. 
 Example usage is:
 
-`
+```
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 
 @(compose(withStyles(styles)) as any)
 class Example extends React.Component<IExampleProps, IExampleState> {...}
-`
+```
 
-To make use of themes in material-ui we need to wrap the content inside a
+To make use of themes in material-ui we need to wrap the content of App inside a
 ```
 <MuiThemeProvider theme={createMuiTheme()}>
   //any content here
 </MuiThemeProvider>
 ```
-[https://material-ui.com/customization/themes/](https://material-ui.com/customization/themes/)
+[read more about Material UI Themes](https://material-ui.com/customization/themes/)
+
 
 
 ## Environment
