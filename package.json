@@ -61,6 +61,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/jest": "^23.3.1",
+    "@types/lodash": "^4.14.119",
     "@types/material-ui": "^0.21.5",
     "@types/node": "^10.9.4",
     "@types/react": "^16.4.13",
