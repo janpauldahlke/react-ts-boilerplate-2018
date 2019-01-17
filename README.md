@@ -4,7 +4,7 @@ It is created via the CLI-Tool `create-react-app <your-appname> --scripts-versio
 
 ## Prequisites
 
-Installed node and npm Version 10.0.0 or higher.
+Installed node and npm Version 10.0.0 or higher.  
 Also make sure to have at least Typescript 3.2.0 or higher installed, (we need this for spread operator)
 
 ## Available Scripts
